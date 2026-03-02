@@ -1,8 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "../ui/Container";
 
 export default function Contact() {
   const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    if (status === "success") {
+      const timer = setTimeout(() => {
+        setStatus("");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,6 +47,7 @@ export default function Contact() {
             placeholder="Your Name"
             required
             className="w-full p-3 border rounded-lg"
+            onChange={() => setStatus("")}
           />
 
           <input
@@ -45,6 +56,7 @@ export default function Contact() {
             placeholder="Your Phone Number"
             required
             className="w-full p-3 border rounded-lg"
+            onChange={() => setStatus("")}
           />
 
           <textarea
@@ -53,6 +65,7 @@ export default function Contact() {
             required
             rows={4}
             className="w-full p-3 border rounded-lg"
+            onChange={() => setStatus("")}
           />
 
           <button
@@ -63,13 +76,15 @@ export default function Contact() {
           </button>
 
           {status === "success" && (
-            <p className="text-green-600 text-center">
+            <p className="text-green-600 text-center transition-opacity duration-500">
               ✅ Enquiry sent successfully!
             </p>
           )}
 
           {status === "error" && (
-            <p className="text-red-600 text-center">❌ Something went wrong.</p>
+            <p className="text-red-600 text-center transition-opacity duration-500">
+              ❌ Something went wrong.
+            </p>
           )}
         </form>
       </Container>
