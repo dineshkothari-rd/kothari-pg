@@ -19,7 +19,7 @@ export const siteConfig = {
     },
     {
       type: "Double Sharing",
-      price: 6500,
+      price: 7000,
       highlight: false,
     },
   ],
